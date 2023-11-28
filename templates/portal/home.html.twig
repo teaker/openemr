@@ -142,6 +142,8 @@
             $("#medicationlist").load("./get_medications.php", {}, function () {});
 
             $("#labresults").load("./get_lab_results.php", {}, function () {});
+            
+            $("#procedurelist").load("./get_procedure_list.php", {}, function () {});
 
             $("#amendmentslist").load("./get_amendments.php", {}, function () {});
 
@@ -432,6 +434,10 @@
             <div class="card">
                 <header class="card-header bg-primary text-light">{{ 'Lab Results' | xlt }}</header>
                 <div id="labresults" class="card-body bg-light"></div>
+            </div>
+            <div class="card">
+                <header class="card-header bg-primary text-light">{{ 'Procedure Availability and Pricing' | xlt }}</header>
+                <div id="procedurelist" class="card-body bg-light"></div>
             </div>
         </div>
 

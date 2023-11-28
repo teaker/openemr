@@ -17,6 +17,8 @@
 
 require_once("verify_session.php");
 require_once('../library/options.inc.php');
+require_once("./../library/patient.inc.php");
+
 
 $selects =
 "po.procedure_order_id, po.date_ordered, pc.procedure_order_seq, " .
@@ -41,6 +43,8 @@ $res = sqlStatement("SELECT $selects " .
     "WHERE po.patient_id = ? AND $where " .
     "ORDER BY $orderby", array($pid));
 
+$postcode2 = getPatientData($pid, "postal_code");
+
 if (sqlNumRows($res) > 0) {
     ?>
     <table class="table table-striped table-sm table-bordered">
@@ -54,9 +58,14 @@ if (sqlNumRows($res) > 0) {
         <th><?php echo xlt('Units'); ?></th>
         <th><?php echo xlt('Result Status'); ?></th>
         <th><?php echo xlt('Report Status'); ?></th>
+        
         </tr>
+        <?php echo '<pre>'; print_r($postcode2['postal_code']); echo '</pre>'; ?>
     <?php
     $even = false;
+
+
+    $postcode = getPatientData($pid, "postal_code");
 
     while ($row = sqlFetchArray($res)) {
         $order_type_id  = empty($row['order_type_id'      ]) ? 0 : ($row['order_type_id' ] + 0);
@@ -76,6 +85,8 @@ if (sqlNumRows($res) > 0) {
         $pscond = "ps.procedure_report_id = '" . add_escape_custom($report_id) . "'";
 
         $joincond = "ps.result_code = pt2.procedure_code";
+        
+        $proccode = "pt2.procedure_code";
 
         // This union emulates a full outer join. The idea is to pick up all
         // result types defined for this order type, as well as any actual
@@ -99,6 +110,7 @@ if (sqlNumRows($res) > 0) {
                 $even = true;
             }
             $date = explode('-', $row['date_ordered']);
+            $url = "http://testapiurl.com/get_costs?patientzip=" . $postcode2['postal_code'] . "&procedure_code=" . $rrow['procedure_code'];
             echo "<tr class='" . $class . "'>";
             echo "<td>" . text($date[1] . "/" . $date[2] . "/" . $date[0]) . "</td>";
             echo "<td>" . text($row['procedure_name']) . "</td>";
@@ -109,7 +121,14 @@ if (sqlNumRows($res) > 0) {
             echo "<td>" . generate_display_field(array('data_type' => '1', 'list_id' => 'proc_unit'), $rrow['pt2_units']) . "</td>";
             echo "<td>" . generate_display_field(array('data_type' => '1', 'list_id' => 'proc_res_status'), $rrow['result_status']) . "</td>";
             echo "<td>" . generate_display_field(array('data_type' => '1', 'list_id' => 'proc_rep_status'), $row['report_status']) . "</td>";
+            //echo "<td>" . '<pre>'; print_r($rrow['procedure_code']); echo '</pre>';
+            //echo "<td>" . '<pre>'; print_r($url); echo '</pre>';
+           // echo "<td>" . "<a href=$url> LINK </a>" . "</td>";
             echo "</tr>";
+            
+            
+            
+            
         }
     }
 
