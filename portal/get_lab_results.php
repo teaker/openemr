@@ -60,7 +60,7 @@ if (sqlNumRows($res) > 0) {
         <th><?php echo xlt('Report Status'); ?></th>
         
         </tr>
-        <?php echo '<pre>'; print_r($postcode2['postal_code']); echo '</pre>'; ?>
+        
     <?php
     $even = false;
 
