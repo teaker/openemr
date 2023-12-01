@@ -74,7 +74,7 @@ $N = 7;
 <div class='demographics table-responsive' id='DEM'>
 
     <?php
-    $result1 = getPatientData($pid, "postal_code");
+    $result1 = getPatientData($pid);
     $result2 = getEmployerData($pid);
     ?>
     <div class="card">
