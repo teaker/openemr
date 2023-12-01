@@ -25,7 +25,7 @@ $rres = sqlStatement("SELECT $selects " .
 
 //$test = sqlFetchArray($rres);
 
-print_r($test);
+//print_r($test);
 
 //If procedures have been ordered for the patient, begin building the procedure pricing tables
 if (sqlNumRows($rres) >= 0) {
@@ -91,8 +91,12 @@ if (sqlNumRows($rres) >= 0) {
 // Check if the 'costs' array exists and is not empty
         if (isset($result['costs']) && !empty($result['costs'])) {
             // Start building the table
-            echo '<table border="1">
-        <thead>
+            echo '<table class="table table-striped table-sm table-bordered">
+     
+        <thead style="text-align:center">
+            <tr>
+            <th colspan="7"> Pricing </th>
+            </tr>
             <tr>
                 <th>Facility Name</th>
                 <th>Address</th>
@@ -121,7 +125,7 @@ if (sqlNumRows($rres) >= 0) {
             }
 
                 // Close the table
-                echo '</tbody></table>';
+                echo '</tbody></table><br><br>';
             } else {
                 echo 'No data available';
             }
@@ -136,3 +140,4 @@ else {
     echo xlt("No Results");
 }
 ?>
+
