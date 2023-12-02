@@ -331,8 +331,7 @@ input[type=text] {
 /* REFRACTION PANEL */
 
 #REFRACTION_sections {
-  max-width: 95%;
-  margin: auto;
+  margin: 0 auto;
 }
 
 .refraction_panel {
@@ -644,7 +643,6 @@ body {
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  font-size: 0.8rem;
 }
 
 .sections {
@@ -698,7 +696,7 @@ body {
 
 .exam_section_left {
   float: left;
-  margin: 5px;
+  margin: 5px auto;
   min-height: 415px;
   padding: 10px;
   top: 0;
@@ -719,7 +717,7 @@ body {
 
 .exam_section_right {
   float: left;
-  margin: 5px;
+  margin: 5px auto;
   min-height: 415px;
   padding: 10px;
   top: 0;
@@ -2164,7 +2162,7 @@ View.php
 
 #DA_EXAM_sections {
   display: inline-table;
-  max-width: 90%;
+  max-width: 93%;
   text-align: center;
 }
 

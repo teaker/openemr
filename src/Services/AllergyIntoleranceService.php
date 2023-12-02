@@ -107,9 +107,6 @@ class AllergyIntoleranceService extends BaseService
         $statementResults =  QueryUtils::sqlStatementThrowException($sql, $sqlBindArray);
 
         $processingResult = new ProcessingResult();
-        // create temp allergy uuid array since sql returns duplicates if
-        // allergies do not have a user associated
-        $temp_uuid_array = [];
         while ($row = sqlFetchArray($statementResults)) {
             $row['uuid'] = UuidRegistry::uuidToString($row['allergy_uuid']);
             $row['puuid'] = UuidRegistry::uuidToString($row['puuid']);
@@ -128,11 +125,7 @@ class AllergyIntoleranceService extends BaseService
                 $row['reaction'] = $this->addCoding($row['reaction_codes']);
             }
             unset($row['allergy_uuid']);
-            // only add to processing result if unique
-            if (!in_array($row['uuid'], $temp_uuid_array)) {
-                $processingResult->addData($row);
-                array_push($temp_uuid_array, $row['uuid']);
-            }
+            $processingResult->addData($row);
         }
         return $processingResult;
     }
